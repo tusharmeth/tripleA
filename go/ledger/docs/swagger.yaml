@@ -1,0 +1,174 @@
+basePath: /
+definitions:
+  accounts.Account:
+    properties:
+      account_id:
+        type: string
+      balance:
+        type: number
+      created_at:
+        type: string
+      initial_balance:
+        type: number
+      updated_at:
+        type: string
+    type: object
+  accounts.createAccountRequest:
+    properties:
+      account_id:
+        type: string
+      initial_balance:
+        type: number
+    type: object
+  transactions.Transaction:
+    properties:
+      amount:
+        type: string
+      created_at:
+        type: string
+      destination_account_id:
+        type: string
+      source_account_id:
+        type: string
+      transaction_id:
+        type: string
+    type: object
+  transactions.createTransactionRequest:
+    properties:
+      amount:
+        type: string
+      destination_account_id: {}
+      source_account_id: {}
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API for managing accounts and transactions.
+  title: Ledger API
+  version: "1.0"
+paths:
+  /accounts:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new account with a given ID and initial balance
+      parameters:
+      - description: Account to create
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/accounts.createAccountRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/accounts.Account'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: Conflict
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create an account
+      tags:
+      - accounts
+  /accounts/{id}:
+    get:
+      description: Retrieves an account by its ID
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/accounts.Account'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get an account
+      tags:
+      - accounts
+  /transactions:
+    post:
+      consumes:
+      - application/json
+      description: Transfers an amount from source account to destination account
+      parameters:
+      - description: Transaction to create
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/transactions.createTransactionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/transactions.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a transaction
+      tags:
+      - transactions
+  /transactions/{id}:
+    get:
+      description: Retrieves a transaction by its ID
+      parameters:
+      - description: Transaction ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/transactions.Transaction'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get a transaction
+      tags:
+      - transactions
+swagger: "2.0"
