@@ -10,12 +10,11 @@ import (
 )
 
 type Handler struct {
-	store        *Store
-	accountStore *accounts.Store
+	store TransactionStorer
 }
 
-func NewHandler(store *Store, accountStore *accounts.Store) *Handler {
-	return &Handler{store: store, accountStore: accountStore}
+func NewHandler(store TransactionStorer) *Handler {
+	return &Handler{store: store}
 }
 
 func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
@@ -70,7 +69,8 @@ func (h *Handler) createTransaction(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := h.accountStore.Transfer(sourceID, destID, amount); err != nil {
+	tx, err := h.store.Create(sourceID, destID, req.Amount)
+	if err != nil {
 		switch {
 		case errors.Is(err, accounts.ErrAccountNotFound):
 			writeError(w, http.StatusNotFound, "one or both accounts not found")
@@ -81,12 +81,6 @@ func (h *Handler) createTransaction(w http.ResponseWriter, r *http.Request) {
 		default:
 			writeError(w, http.StatusInternalServerError, "failed to process transaction")
 		}
-		return
-	}
-
-	tx, err := h.store.Create(sourceID, destID, req.Amount)
-	if err != nil {
-		writeError(w, http.StatusInternalServerError, "transaction processed but failed to record")
 		return
 	}
 

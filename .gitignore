@@ -1,3 +1,22 @@
 */vendor/
 */target/
 *.class
+
+# Compiled binaries
+*/ledger
+
+# Environment / secrets
+.env
+*.env
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Go test cache and coverage
+*.test
+*.out
+coverage.html

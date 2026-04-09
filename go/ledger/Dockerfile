@@ -10,7 +10,9 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -mod=vendor -o ledger ./cmd/ledger
 
 # ---- Run stage ----
-FROM scratch
+FROM alpine:3.20
+
+RUN apk --no-cache add ca-certificates tzdata
 
 COPY --from=builder /app/ledger /ledger
 
