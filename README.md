@@ -73,3 +73,79 @@ To also remove the database volume:
 ```bash
 docker compose down -v
 ```
+
+---
+
+# GO
+
+## Ledger
+
+## How to Run
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/tusharmeth/tripleA.git
+cd go/ledger
+```
+
+**2. Start the application**
+```bash
+docker compose up --build
+```
+
+This starts both the PostgreSQL database and the Go app. The app is ready when you see `Ledger service listening on :9090` in the logs.
+
+**3. Open Swagger UI**
+
+Navigate to: [http://localhost:9090/swagger/index.html](http://localhost:9090/swagger/index.html)
+
+---
+
+## Using the API
+
+**Create accounts**
+
+Use `POST /accounts` with a body like:
+```json
+{
+  "account_id": "alice",
+  "initial_balance": 1000.00
+}
+```
+
+Create a second account:
+```json
+{
+  "account_id": "bob",
+  "initial_balance": 500.00
+}
+```
+
+**Perform a transaction**
+
+Use `POST /transactions` to transfer funds between accounts:
+```json
+{
+  "source_account_id": "alice",
+  "destination_account_id": "bob",
+  "amount": "200.00"
+}
+```
+
+**View an account or transaction**
+
+- `GET /accounts/{id}` — get a specific account
+- `GET /transactions/{id}` — get a specific transaction
+
+---
+
+## Stop the application
+
+```bash
+docker compose down
+```
+
+To also remove the database volume:
+```bash
+docker compose down -v
+```

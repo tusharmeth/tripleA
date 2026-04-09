@@ -7,15 +7,13 @@ COPY go.mod go.sum ./
 COPY vendor ./vendor
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -mod=vendor -o ledger ./cmd/ledger
+RUN CGO_ENABLED=0 GOOS=linux go build -mod=vendor -tags timetzdata -o ledger ./cmd/ledger
 
 # ---- Run stage ----
-FROM alpine:3.20
-
-RUN apk --no-cache add ca-certificates tzdata
+FROM gcr.io/distroless/static-debian12:nonroot
 
 COPY --from=builder /app/ledger /ledger
 
-EXPOSE 8080
+EXPOSE 9090
 
 ENTRYPOINT ["/ledger"]

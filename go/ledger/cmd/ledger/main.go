@@ -16,7 +16,7 @@ import (
 // @version         1.0
 // @description     API for managing accounts and transactions.
 
-// @host      localhost:8080
+// @host      localhost:9090
 // @BasePath  /
 
 func main() {
@@ -50,9 +50,9 @@ func main() {
 
 	mux.HandleFunc("GET /swagger/", httpSwagger.WrapHandler)
 
-	log.Println("Ledger service listening on :8080")
-	log.Println("Swagger UI available at http://localhost:8080/swagger/index.html")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	log.Println("Ledger service listening on :9090")
+	log.Println("Swagger UI available at http://localhost:9090/swagger/index.html")
+	if err := http.ListenAndServe(":9090", mux); err != nil {
 		log.Fatalf("server error: %v", err)
 	}
 }
