@@ -7,7 +7,7 @@
 **1. Clone the repository**
 ```bash
 git clone https://github.com/tusharmeth/tripleA.git
-cd java/ledger
+cd tripleA/java/ledger
 ```
 
 **2. Start the application**
@@ -85,7 +85,7 @@ docker compose down -v
 **1. Clone the repository**
 ```bash
 git clone https://github.com/tusharmeth/tripleA.git
-cd go/ledger
+cd tripleA/go/ledger
 ```
 
 **2. Start the application**
