@@ -6,7 +6,7 @@
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/tusharmeth/tripleA.git
+git clone https://github.com/tusharmeth/takeHomeTest.git
 cd tripleA/java/ledger
 ```
 
@@ -84,7 +84,7 @@ docker compose down -v
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/tusharmeth/tripleA.git
+git clone https://github.com/tusharmeth/takeHomeTest.git
 cd tripleA/go/ledger
 ```
 
